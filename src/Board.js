@@ -84,6 +84,9 @@
         if (opening === 1) {
           counter ++
         }
+        if (counter === 2) {
+          return true
+        }
       })
       return counter >= 2;
     },
@@ -91,7 +94,7 @@
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       for (var i = 0; i < this.rows().length; i++) {
-        if (this.hasRowConflictAt(this.rows()[i])) {
+        if (this.hasRowConflictAt(i)) {
           return true;
         }
       }
@@ -108,14 +111,16 @@
       var column = _.map(this.rows(), function(row) {
         return row[colIndex]
       })
-      
       var counter = 0;
       _.each(column, function(opening) {
         if (opening === 1) {
           counter ++
         }
+        if (counter === 2) {
+          return true;
+        }
       })
-      return counter >= 2;
+      return false;
     },
 
     // test if any columns on this board contain conflicts
