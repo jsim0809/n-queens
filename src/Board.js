@@ -78,9 +78,11 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+    size: function() { return this.rows().length },
+
     hasRowConflictAt: function(rowIndex) {
       var counter = 0;
-      for (var i = 0; i < this.get(rowIndex).length; i++) {
+      for (var i = 0; i < this.size(); i++) {
         if (this.get(rowIndex)[i] === 1) {
           counter++;
         }
@@ -93,7 +95,7 @@
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      for (var i = 0; i < this.rows().length; i++) {
+      for (var i = 0; i < this.size(); i++) {
         if (this.hasRowConflictAt(i)) {
           return true;
         }
@@ -109,7 +111,7 @@
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
       var counter = 0;
-      for (var i = 0; i < this.rows().length; i++) {
+      for (var i = 0; i < this.size(); i++) {
         if (this.get(i)[colIndex] === 1) {
           counter++;
         }
@@ -122,7 +124,7 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      for (var i = 0; i < this.rows().length; i++) {
+      for (var i = 0; i < this.size(); i++) {
         if (this.hasColConflictAt(i)) {
           return true;
         }
@@ -139,15 +141,43 @@
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       // starting from major Diagonal Column Index At First Row;
       //iterates over every remaining row as long as defined and checks the the row's position that is +1 of past checked position as long as defined.
-      return false; // fixme
+      var counter = 0;
+      var rowIndex = 0;
+      var columnIndex = majorDiagonalColumnIndexAtFirstRow;
+      while (columnIndex < 0) {
+        rowIndex++;
+        columnIndex++;
+      }
+      while (this._isInBounds(rowIndex, columnIndex)) {
+        if (this.valueAt(rowIndex, columnIndex) === 1) {
+          counter++;
+        }
+        if (counter === 2) {
+          return true;
+        }
+        rowIndex++;
+        columnIndex++;
+      }
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      var startIndex = 2 - this.size();
+      var endIndex = this.size() - 2;
+      for (var i = startIndex; i <= endIndex; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
 
-
+    // Helper function that returns the value located at a certain square.
+    // Takes row & column indexes as arguments
+    valueAt: function (rowIndex, columnIndex) {
+      return this.get(rowIndex)[columnIndex];
+    },
 
     // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
