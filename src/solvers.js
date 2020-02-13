@@ -20,9 +20,28 @@ window.checkIfConflicts = function(matrix) {
 };
 
 window.findNRooksSolution = function(n) {
-  // create an empty matrix of n by n squares
-  //
-  var solution = undefined; //fixme
+  // returns a MATRIX, not a Board.
+  var count = n;
+
+  var matrix = [];
+
+  var zeroArrayMaker = function(num) {
+    var result = [];
+    while (num > 0) {
+      result.push(0);
+      num--;
+    }
+    return result;
+  };
+
+  while (count > 0) {
+    var currRow = zeroArrayMaker(n);
+    currRow[count-1] = 1;
+    matrix.push(currRow);
+    count--;
+  }
+
+  var solution = matrix;
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
