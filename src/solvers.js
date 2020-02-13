@@ -159,8 +159,13 @@ window.findNQueensSolution = function (n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function (n) {
+  // If n is 0 or 1, return the single solution of an empty board
+  if (n === 0 || n === 1) {
+    console.log('Number of solutions for ' + n + ' queens:', 1);
+    return 1;
+  }
+
   // Same as finding 1 solution, except keeps counting until the end of the possiblity space.
-  debugger;
   var solutionCount = 0;
 
   // I'm going to create an array of all possible first moves -- all the places a queen can be on the first row.
@@ -185,7 +190,9 @@ window.countNQueensSolutions = function (n) {
   while (boardsToTry.length) {
     if (boardsToTry[0].length === n) {
       solutionCount++;
+      // console.log(JSON.stringify(boardsToTry[0]));
       boardsToTry.splice(0, 1);
+      continue;
     }
     boardsToTry.splice(0, 1, ...createNextLegalMoves(boardsToTry[0]));
   }
