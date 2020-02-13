@@ -198,7 +198,7 @@ window.countNQueensSolutions = function (n) {
   while (boardsToTry.length) {
     if (boardsToTry[0].length === n) {
       solutionCount++;
-      console.log(JSON.stringify(boardsToTry[0]));
+      //console.log(JSON.stringify(boardsToTry[0]));
       boardsToTry.splice(0, 1);
       continue;
     }

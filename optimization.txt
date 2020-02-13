@@ -1,0 +1,63 @@
+First draft of a solution, before optimization:
+
+n = 4
+=====
+Time 1: 34ms
+Time 2: 41ms
+Time 3: 40ms
+
+Memory use: 2.3mb
+
+n = 5
+=====
+Time 1: 58ms
+Time 2: 59ms
+Time 3: 64ms
+
+Memory use: 2.3mb
+
+n = 6
+=====
+Time 1: 91ms
+Time 2: 96ms
+Time 3: 91ms
+
+Memory use: 2.4mb
+
+n = 7
+=====
+Time 1: 231ms
+Time 2: 233ms
+Time 3: 231ms
+
+Memory use: 2.4mb
+
+n = 8
+=====
+Time 1: 879ms
+Time 2: 884ms
+Time 3: 876ms
+
+Memory use: 2.5mb
+
+n = 9
+=====
+Time 1: 4406ms
+Time 2: 4443ms
+Time 3: 4448ms
+
+Memory use: 2.5mb
+
+=====================================
+Optimization 1: removing console.logs
+=====================================
+
+n = 9
+=====
+Time 1: 4255ms
+Time 2: 4245ms
+Time 3: 4269ms
+
+==========================================
+Optimization 2: removing symmetrical tests
+==========================================
