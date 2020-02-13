@@ -175,11 +175,14 @@
 
     // Helper function that returns the value located at a certain square.
     // Takes row & column indexes as arguments
-    valueAt: function (rowIndex, columnIndex) {
-      return this.get(rowIndex)[columnIndex];
-    },
 
-    // Minor Diagonals - go from top-right to bottom-left
+    valueAt: (rowIndex, columnIndex) => this.get(rowIndex)[columnIndex],
+
+    // function (rowIndex, columnIndex) {
+    //   return this.get(rowIndex)[columnIndex];
+    // },
+
+    // // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
