@@ -13,6 +13,7 @@
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
+// Time complexity: O(n^2)
 window.checkIfConflicts = function (matrix) {
   // returns boolean representing if a matrix or partial matrix has no conflicts (for placed queens)
   // a partial matrix is just the first few rows of an n-sized board.
@@ -26,6 +27,7 @@ window.checkIfConflicts = function (matrix) {
   return board.hasAnyColConflicts() || board.hasAnyMajorDiagonalConflicts() || board.hasAnyMinorDiagonalConflicts();
 };
 
+// Time complexity: O(n^2)
 window.makeEmptyMatrix = function (n) {
   return _(_.range(n)).map(function () {
     return _(_.range(n)).map(function () {
@@ -34,7 +36,7 @@ window.makeEmptyMatrix = function (n) {
   });
 };
 
-
+// Time complexity: O(n)
 window.zeroArrayMaker = function (num) {
   var result = [];
   while (num > 0) {
@@ -44,6 +46,7 @@ window.zeroArrayMaker = function (num) {
   return result;
 };
 
+// Time complexity: O(n)
 window.findNRooksSolution = function (n) {
   // returns a MATRIX, not a Board.
   var count = 0;
@@ -63,6 +66,7 @@ window.findNRooksSolution = function (n) {
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
+// Time complexity: O(n)
 window.countNRooksSolutions = function (n) {
 
   var factorial = function (n) {
@@ -80,6 +84,7 @@ window.countNRooksSolutions = function (n) {
 
 // Helper function creating an array of possible moves for board of size n.
 // e.g. for 4, it returns [[[1, 0 , 0, 0]], [[0, 1, 0, 0]], [[0, 0, 1, 0]], [[0, 0, 0, 1]]]
+// Time complexity: O(n^2)
 window.createBoardsToTry = function (n) {
   var count = 0;
 
@@ -97,6 +102,7 @@ window.createBoardsToTry = function (n) {
 
 // Helper function to create an array of next moves to try.
 // e.g. for 4, it returns [[1, 0 , 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
+// Time complexity: O(n^2)
 window.setOfNextMoves = function (n) {
   var count = 0;
   var result = [];
@@ -112,6 +118,7 @@ window.setOfNextMoves = function (n) {
 };
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
+// Time complexity: O(n^n)!?
 window.findNQueensSolution = function (n) {
   // If n is 0, return the single solution of an empty board
   if (n === 0) {
@@ -158,6 +165,7 @@ window.findNQueensSolution = function (n) {
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
+// Time complexity: O(n^n)!?
 window.countNQueensSolutions = function (n) {
   // If n is 0 or 1, return the single solution of an empty board
   if (n === 0 || n === 1) {
@@ -190,7 +198,7 @@ window.countNQueensSolutions = function (n) {
   while (boardsToTry.length) {
     if (boardsToTry[0].length === n) {
       solutionCount++;
-      // console.log(JSON.stringify(boardsToTry[0]));
+      console.log(JSON.stringify(boardsToTry[0]));
       boardsToTry.splice(0, 1);
       continue;
     }
