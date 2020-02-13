@@ -14,9 +14,26 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 window.checkIfConflicts = function(matrix) {
-  // returns boolean representing if a matrix has no conflicts (for placed queens)
-  var board = new Board(matrix);
-  return board.hasAnyColConflicts() && board.hasAnyMajorDiagonalConflicts() && board.hasAnyMinorDiagonalConflicts();
+  // returns boolean representing if a matrix or partial matrix has no conflicts (for placed queens)
+  // a partial matrix is just the first few rows of an n-sized board.
+  var matrixCopy = matrix.slice();
+  var rowsToAdd = matrix[0].length - matrix.length;
+  while (rowsToAdd) {
+    matrixCopy.push(window.zeroArrayMaker(matrix[0].length));
+    rowsToAdd--;
+  }
+  var board = new Board(matrixCopy);
+  return board.hasAnyColConflicts() || board.hasAnyMajorDiagonalConflicts() || board.hasAnyMinorDiagonalConflicts();
+};
+
+
+window.zeroArrayMaker = function(num) {
+  var result = [];
+  while (num > 0) {
+    result.push(0);
+    num--;
+  }
+  return result;
 };
 
 window.findNRooksSolution = function(n) {
@@ -25,17 +42,8 @@ window.findNRooksSolution = function(n) {
 
   var matrix = [];
 
-  var zeroArrayMaker = function(num) {
-    var result = [];
-    while (num > 0) {
-      result.push(0);
-      num--;
-    }
-    return result;
-  };
-
   while (count > 0) {
-    var currRow = zeroArrayMaker(n);
+    var currRow = window.zeroArrayMaker(n);
     currRow[count-1] = 1;
     matrix.push(currRow);
     count--;
@@ -64,7 +72,12 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
+
+  // I'm going to create an array of all possible first moves -- all the places a queen can be on the first row.
+  // At every step, I'm going to
+
+
+  var solution = undefined;
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;

@@ -1,6 +1,33 @@
 describe('solvers', function() {
   window.displayBoard = function() {};
 
+  describe('checkIfConflicts(matrix)', function() {
+
+    it('finds conflicts on a full matrix', function() {
+      var fullMatrix = [[0, 0, 0], [0, 1, 0], [1, 0, 0]];
+
+      expect(checkIfConflicts(fullMatrix)).to.equal(true);
+    });
+
+    it('correctly finds no conflicts on a full matrix', function() {
+      var fullMatrix = [[0, 0, 0], [0, 0, 1], [1, 0, 0]];
+
+      expect(checkIfConflicts(fullMatrix)).to.equal(false);
+    });
+
+    it('finds conflicts on a partial matrix', function() {
+      var partialMatrix = [[0, 0, 0, 1], [0, 0, 1, 0]];
+
+      expect(checkIfConflicts(partialMatrix)).to.equal(true);
+    });
+
+    it('correctly finds no conflicts on a partial matrix', function() {
+      var partialMatrix = [[0, 0, 0, 1], [0, 1, 0, 0]];
+
+      expect(checkIfConflicts(partialMatrix)).to.equal(false);
+    });
+  });
+
   describe('findNRooksSolution()', function() {
 
     it('finds a valid solution for n of 1-8', function() {
