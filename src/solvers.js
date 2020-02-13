@@ -38,15 +38,16 @@ window.zeroArrayMaker = function(num) {
 
 window.findNRooksSolution = function(n) {
   // returns a MATRIX, not a Board.
-  var count = n;
+  // this function is also used by findNQueensSolution to create an array of possible "next moves".
+  var count = 0;
 
   var matrix = [];
 
-  while (count > 0) {
+  while (count < n) {
     var currRow = window.zeroArrayMaker(n);
-    currRow[count-1] = 1;
+    currRow[count] = 1;
     matrix.push(currRow);
-    count--;
+    count++;
   }
 
   var solution = matrix;
@@ -70,17 +71,60 @@ window.countNRooksSolutions = function(n) {
   return solutionCount;
 };
 
+// Helper function creating an array of possible moves for board of size n.
+// e.g. for 4, it returns [[[1, 0 , 0, 0]], [[0, 1, 0, 0]], [[0, 0, 1, 0]], [[0, 0, 0, 1]]]
+window.createBoardsToTry = function(n) {
+  var count = 0;
+
+  var result = [];
+
+  while (count < n) {
+    var currRow = window.zeroArrayMaker(n);
+    currRow[count] = 1;
+    result.push([currRow]);
+    count++;
+  }
+
+  return result;
+}
+
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
 
   // I'm going to create an array of all possible first moves -- all the places a queen can be on the first row.
-  // At every step, I'm going to
+  // Conveniently, we can do this with our already written findNRooksSolution.
+  var boardsToTry = window.createBoardsToTry(n);
+  var nextMoves = window.findNRooksSolution(n);
+
+  // Helper function that creates an array of next possible moves if they are valid boards
+  var createNextLegalMoves = function(currBoard) {
+    var nextLegalMoves = [];
+    for (var move of nextMoves) {
+      var boardToCheck = currBoard;
+      boardToCheck.push(move);
+      if (checkIfConflicts(boardToCheck) === false) {
+        nextLegalMoves.push(boardToCheck);
+      }
+    }
+    return nextLegalMoves;
+  }
+
+  // At every step, I'm going to splice out that board and add up to 8 boards in its place: the 8 boards representing 8 possible "next moves"
+
+  for (var i = 0; i < boardsToTry.length; i++) {
+    if (boardsToTry[i].length === n) {
+      var solution = boardsToTry[i];
+      console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
+      return solution;
+    }
+    boardsToTry.splice(i, 1, ...createNextLegalMoves(boardsToTry[i]));
+  }
 
 
-  var solution = undefined;
 
-  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  return solution;
+  // if there are no possible next moves, the board is simply spliced out and not replaced by anything.
+  // when we would splice in a matrix of length n with no conflicts, we have found a solution, so we can halt.
+
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other

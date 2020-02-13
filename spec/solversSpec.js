@@ -60,6 +60,16 @@ describe('solvers', function() {
 
   });
 
+  describe('createBoardsToTry(n)', function() {
+
+    it('creates a correct "boardsToTry" array', function() {
+    var actual = createBoardsToTry(4);
+    var expected = [[[1, 0 , 0, 0]], [[0, 1, 0, 0]], [[0, 0, 1, 0]], [[0, 0, 0, 1]]];
+
+    expect(actual).to.eql(expected);
+    });
+  });
+
   describe('findNQueensSolution()', function() {
 
     it('finds a valid solution for n of 0-7', function() {
