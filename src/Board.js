@@ -139,8 +139,6 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      // starting from major Diagonal Column Index At First Row;
-      //iterates over every remaining row as long as defined and checks the the row's position that is +1 of past checked position as long as defined.
       var counter = 0;
       var rowIndex = 0;
       var columnIndex = majorDiagonalColumnIndexAtFirstRow;
@@ -176,11 +174,9 @@
     // Helper function that returns the value located at a certain square.
     // Takes row & column indexes as arguments
 
-    valueAt: (rowIndex, columnIndex) => this.get(rowIndex)[columnIndex],
-
-    // function (rowIndex, columnIndex) {
-    //   return this.get(rowIndex)[columnIndex];
-    // },
+    valueAt: function (rowIndex, columnIndex) {
+      return this.get(rowIndex)[columnIndex];
+    },
 
     // // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
