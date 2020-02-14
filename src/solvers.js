@@ -100,6 +100,34 @@ window.createBoardsToTry = function (n) {
   return result;
 }
 
+window.createFirstHalfBoardsToTry = function (n) {
+  var count = 0;
+
+  var result = [];
+
+  while (count < Math.floor(n/2)) {
+    var currRow = window.zeroArrayMaker(n);
+    currRow[count] = 1;
+    result.push([currRow]);
+    count++;
+  }
+
+  return result;
+}
+
+window.createMiddleBoardsToTry = function (n) {
+  if (n % 2 === 0) {
+    return [];
+  }
+
+  var result = [];
+  var currRow = window.zeroArrayMaker(n);
+  currRow[Math.floor(n / 2)] = 1;
+  result.push([currRow]);
+
+  return result;
+}
+
 // Helper function to create an array of next moves to try.
 // e.g. for 4, it returns [[1, 0 , 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
 // Time complexity: O(n^2)
@@ -177,7 +205,8 @@ window.countNQueensSolutions = function (n) {
   var solutionCount = 0;
 
   // I'm going to create an array of all possible first moves -- all the places a queen can be on the first row.
-  var boardsToTry = window.createBoardsToTry(n);
+  var firstHalfBoardsToTry = window.createFirstHalfBoardsToTry(n);
+  var middleBoardsToTry = window.createMiddleBoardsToTry(n);
   var nextMoves = window.setOfNextMoves(n);
 
   // Helper function that creates an array of next possible moves if they are valid boards
@@ -195,14 +224,26 @@ window.countNQueensSolutions = function (n) {
 
   // At every step, I'm going to splice out that board and add up to 8 boards in its place: the 8 boards representing 8 possible "next moves"
 
-  while (boardsToTry.length) {
-    if (boardsToTry[0].length === n) {
+  while (firstHalfBoardsToTry.length) {
+    if (firstHalfBoardsToTry[0].length === n) {
       solutionCount++;
-      //console.log(JSON.stringify(boardsToTry[0]));
-      boardsToTry.splice(0, 1);
+      // console.log(JSON.stringify(firstHalfBoardsToTry[0]));
+      firstHalfBoardsToTry.splice(0, 1);
       continue;
     }
-    boardsToTry.splice(0, 1, ...createNextLegalMoves(boardsToTry[0]));
+    firstHalfBoardsToTry.splice(0, 1, ...createNextLegalMoves(firstHalfBoardsToTry[0]));
+  }
+
+  solutionCount *= 2;
+
+  while (middleBoardsToTry.length) {
+    if (middleBoardsToTry[0].length === n) {
+      solutionCount++;
+      // console.log(JSON.stringify(middleBoardsToTry[0]));
+      middleBoardsToTry.splice(0, 1);
+      continue;
+    }
+    middleBoardsToTry.splice(0, 1, ...createNextLegalMoves(middleBoardsToTry[0]));
   }
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);

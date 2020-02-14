@@ -58,6 +58,16 @@ Time 1: 4255ms
 Time 2: 4245ms
 Time 3: 4269ms
 
+Memory use: 2.5mb
+
 ==========================================
 Optimization 2: removing symmetrical tests
 ==========================================
+
+n = 9
+=====
+Time 1: 2408ms
+Time 2: 2443ms
+Time 3: 2428ms
+
+Memory use: 2.5mb
